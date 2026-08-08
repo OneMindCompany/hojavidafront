@@ -1,0 +1,182 @@
+<form autocomplete="off" [formGroup]="formulario" (ngSubmit)="guardarDatosDelAlumno()">
+    <!-- formulario principal -->
+    <div class="card shadow-1 mt-0 p-1">
+        <h2 class="flex justify-content-center">DATOS DEL ALUMNO</h2>
+        <h3 class="flex justify-content-center text-pink-700 mt-0 mb-0 pb-0">Edad : {{edad}} Años</h3>
+        <fieldset pInputText>
+            <legend pInputText class="font-bold ">INFORMACIÓN PERSONAL</legend>
+            <div class="grid">
+                <div class="col-2 sm:col-2 md:col-2 lg:col-1 mt-0 pt-0">
+                    <p class="flex justify-content-center">FOTOGRAFIA</p>
+                    <img class="w-full" alt="Card" [src]="fotoPreview">
+                    <div class="file-select">
+                        <input class="w-full mb-0 pb-0" type="file" name="imagen" id="imagen"
+                            (change)="manejadorArchivo($event)" />
+                    </div>
+                </div>
+                <div class="col-10 sm:col-10 md:col-10 lg:col-11">
+                    <div class="formgrid grid">
+                        <div class="field col">
+                            <label for="nombre" class="">NOMBRE <i class="pi pi-star text-pink-700 text-xs"></i></label>
+                            <input id="nombre" type="text" pInputText class="w-full" formControlName="nombre" />
+                            <span d-error-msg mensaje="El Nombre es obligarorio"
+                                *ngIf="campoNoEsValido('nombre')"></span>
+                        </div>
+                        <div class="field col">
+                            <label for="apellidoPaterno" class="">APELLIDO PATERNO <i
+                                    class="pi pi-star text-pink-700 text-xs"></i></label>
+                            <input id="apellidoPaterno" type="text" pInputText class="w-full"
+                                formControlName="apellidoPaterno" />
+                            <span d-error-msg mensaje="El Apellido Paterno es obligarorio"
+                                *ngIf="campoNoEsValido('apellidoPaterno')"></span>
+                        </div>
+                        <div class="field col">
+                            <label for="apellidoMaterno" class="">APELLIDO
+                                MATERNO</label>
+                            <input id="apellidoMaterno" type="text" pInputText class="w-full"
+                                formControlName="apellidoMaterno" />
+                        </div>
+                        <div class="field col">
+                            <label for="genero" class="">GÉNERO <i class="pi pi-star text-pink-700 text-xs"></i></label>
+                            <app-select-genero [generoIdInput]="formulario.get('generoId')?.value"
+                                (generoId)="recibirGeneroId($event)"></app-select-genero>
+                        </div>
+                        <div class="field col">
+                            <label for="nombreSocial" class="">NOMBRE SOCIAL</label>
+                            <input id="nombreSocial" type="text" pInputText class="w-full"
+                                formControlName="nombreSocial" />
+                        </div>
+
+                    </div>
+                    <div class="formgrid grid">
+                        <div class="field col">
+                            <label for="fechaNacimiento" class="">FECHA DE NACIMIENTO
+                                <i class="pi pi-star text-pink-700 text-xs"></i></label>
+                            <p-inputMask id="fechaNacimiento" mask="99/99/9999" placeholder="DÍa/Mes/Año"
+                                styleClass="w-full" slotChar="dd/mm/yyyy" formControlName="fechaNacimiento" (onComplete)="generarEdad()" >
+                            </p-inputMask>
+                            <span d-error-msg mensaje="La Fecha de Nacimiento es obligaroria"
+                                *ngIf="campoNoEsValido('fechaNacimiento')"></span>
+                        </div>
+                        <!-- <div class="field col-1">
+                            <label for="edad">EDAD</label>
+                            <label id="edad" class="w-full text-lg text-pink-700 ">{{edad}} Años</label>
+                        </div> -->
+                        <div class="field col">
+                            <label class="">NACIONALIDAD <i class="pi pi-star text-pink-700 text-xs"></i></label>
+                            <app-select-pais [paisIdInput]="formulario.get('paisId')?.value" (paisId)="recibirPaisId($event)"></app-select-pais>
+                        </div>
+                        <div class="field col">
+                            <label for="etnia" class="">ETNIA</label>
+                            <app-select-etnia [etniaIdInput]="formulario.get('etniaId')?.value" (etniaId)="recibirEtniaId($event)"></app-select-etnia>
+                        </div>
+                        <div class="field col">
+                            <label for="religion" class="">RELIGIÓN</label>
+                            <app-select-religion [religionIdInput]="formulario.get('religionId')?.value" (religionId)="recibirReligionId($event)"></app-select-religion>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+        <fieldset pInputText class="mt-2">
+            <legend pInputText class="font-bold">DIRECCIÓN Y CONTACTO</legend>
+
+            <div class="formgrid grid">
+                <div class="field col">
+                    <label for="calle" class="">CALLE <i class="pi pi-star text-pink-700 text-xs"></i></label>
+                    <input id="calle" type="text" pInputText class="w-full" formControlName="calle" />
+                    <span d-error-msg mensaje="La Calle es un dato obligatorio" *ngIf="campoNoEsValido('calle')"></span>
+                </div>
+                <div class="field col-1">
+                    <label for="nro" class="">NÚMERO</label>
+                    <input id="nro" type="number" pInputText class="w-full" formControlName="nro" />
+                </div>
+                <div class="field col-1">
+                    <label for="dpto" class="">DPTO</label>
+                    <input id="dpto" type="text" pInputText class="w-full" formControlName="dpto" />
+                </div>
+                <div class="field col">
+                    <label for="region" class="">REGIÓN <i class="pi pi-star text-pink-700 text-xs"></i></label>
+                    <app-select-region [regionIdInput]="formulario.get('regionId')?.value" (regionId)="recibirRegionId($event)"></app-select-region>
+                </div>
+                <div class="field col">
+                    <label for="comuna" class="">COMUNA <i class="pi pi-star text-pink-700 text-xs"></i></label>
+                    <app-select-comuna [comunaIdInput]="formulario.get('comunaId')?.value" [regionId]="formulario.value.regionId" (comunaId)="recibirComunaId($event)">
+                    </app-select-comuna>
+                </div>
+            </div>
+            <div class="formgrid grid">
+                <div class="field col">
+                    <label for="celular" class="">NÚMERO DE CELULAR</label>
+                    <input id="celular" type="text" pInputText class="w-full" formControlName="celular" />
+                </div>
+                <div class="field col">
+                    <label for="email" class="">EMAIL</label>
+                    <input id="email" type="text" pInputText class="w-full" formControlName="email" />
+                </div>
+            </div>
+        </fieldset>
+        <fieldset pInputText class="mt-2">
+            <legend pInputText class="font-bold ">ANTECEDENTES FAMILIARES DEL ALUMNO</legend>
+
+            <div class="formgrid grid">
+                <div class="field col">
+                    <label for="viveCon" class="">VIVE CON <i class="pi pi-star text-pink-700 text-xs"></i></label>
+                    <input id="viveCon" type="text" pInputText class="w-full" formControlName="viveCon"
+                        placeholder="Ejm: Papa, mamá, dos hermanos y abuelos" />
+                    <span d-error-msg mensaje="Vive Con: es un dato obligatorio"
+                        *ngIf="campoNoEsValido('viveCon')"></span>
+                </div>
+                <div class="field col">
+                    <label for="nroDeHermanos" class="">AGREGAR HERMANO QUE ESTA EN ESTE COLEGIO (UNO A LA VEZ)</label>
+                    <div class="p-inputgroup">
+                        <input type="text" pInputText placeholder="" [formControl]="nuevoHermano">
+                        <button type="button" pButton pRipple class="p-button-outlined" label="AGREGAR"
+                            (click)="agregarHermano()"></button>
+                    </div>
+                    <span for="nroDeHermanos" class="">Ejm: Maria Elena Frankfurt Rivadavia, 4to Básico 'A'</span>
+                </div>
+
+            </div>
+            <div class="formgrid grid" formArrayName="hermanos" *ngIf="hermanosArr.length>0">
+                <div class="field col-12">
+                    <label>HERMANOS QUE ESTÁN EN ESTE COLEGIO</label>
+                </div>
+                <div class="p-inputgroup col-6" *ngFor="let hermano of hermanosArr.controls; let i=index">
+                    <input type="text" pInputText placeholder="Keyword" [formControlName]="i">
+                    <button type="button" pButton pRipple class="p-button-outlined p-button-warning" label="ELIMNINAR"
+                        (click)="borrarHermano(i)"></button>
+                </div>
+
+
+            </div>
+
+        </fieldset>
+    </div>
+    <!--  pie de formulario -->
+    <div class="card shadow-2">
+        <div class="col-12">
+            <div *ngIf="cargando" class="flex justify-content-center align-items-center">
+                <p-progressSpinner [style]="{width: '50px', height: '50px'}" styleClass="custom-spinner" strokeWidth="8"
+                    fill="#EEEEEE" animationDuration=".5s"></p-progressSpinner>
+                <span [ngStyle]="{color: 'var(--bluegray-500)'}">Registrando Informacion, espere!...</span>
+            </div>
+        </div>
+
+        <div class="card grid">
+            <div class="col">
+                <button pButton routerLink='/fichadematricula/nueva' label="Anterior" icon="pi pi-angle-double-left"
+                    iconPos="left" class="p-button-primary w-6 mb-2 ml-2" [disabled]="cargando"></button>
+            </div>
+  
+
+            <div class="col flex justify-content-end">
+
+                <button pButton label="Guardar y Siguiente" icon="pi pi-angle-double-right" iconPos="right"
+                    class="p-button-primary w-6 mb-2 mr-2 "></button>
+
+            </div>
+        </div>
+    </div>
+
+</form>

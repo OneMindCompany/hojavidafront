@@ -1,0 +1,11 @@
+<form [formGroup]="form">
+    <p-autoComplete formControlName="parentesco" [suggestions]="parentescosFiltrados"
+        (completeMethod)="filtrarParentesco($event)" field="descripcion" [dropdown]="true" styleClass="w-full">
+        <ng-template let-parentesco pTemplate="item">
+            <div class="parentesco-item">
+                <div>{{parentesco.descripcion}}</div>
+            </div>
+        </ng-template>
+    </p-autoComplete>
+</form>
+<span d-error-msg mensaje="Debe seleccionar un Parentesco" *ngIf="campoNoEsValido('parentesco')"></span>

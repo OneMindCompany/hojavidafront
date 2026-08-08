@@ -1,0 +1,11 @@
+<form [formGroup]="form">
+    <p-autoComplete formControlName="profesion" [suggestions]="profesionesFiltradas"
+        (completeMethod)="filtrarProfesion($event)" field="nombre" [dropdown]="true" styleClass="w-full">
+        <ng-template let-profesion pTemplate="item">
+            <div class="profesion-item">
+                <div>{{profesion.nombre}}</div>
+            </div>
+        </ng-template>
+    </p-autoComplete>
+</form>
+<span d-error-msg mensaje="Debe seleccionar una Profesion" *ngIf="campoNoEsValido('profesion')"></span>

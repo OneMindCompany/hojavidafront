@@ -1,0 +1,11 @@
+<form [formGroup]="form">
+    <p-autoComplete formControlName="genero" [suggestions]="generosFiltrados" (completeMethod)="filtrarGenero($event)"
+        field="descripcion" [dropdown]="true" styleClass="w-full">
+        <ng-template let-genero pTemplate="item">
+            <div class="genero-item">
+                <div>{{genero.descripcion}}</div>
+            </div>
+        </ng-template>
+    </p-autoComplete>
+</form>
+<span d-error-msg mensaje="Debe seleccionar un Genero" *ngIf="campoNoEsValido('genero')"></span>

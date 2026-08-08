@@ -1,0 +1,7 @@
+  .container{
+    min-height:80vh;
+    background:linear-gradient(rgba(0,0,0,0.1),rgba(0,0,0,0.1)),url(../../../../assets/global-image/fondo.jpg);
+    background-size: cover;
+    /* background-position: center; */
+  }
+ 

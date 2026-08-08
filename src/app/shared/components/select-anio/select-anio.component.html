@@ -1,0 +1,13 @@
+<form [formGroup]="form">
+
+    <p-autoComplete  formControlName="anio" [suggestions]="aniosFiltrados"
+    (completeMethod)="filtrarAnio($event)"  [dropdown]="true"
+    styleClass="w-full" placeholder="Seleccione Año de matrícula">
+    <ng-template let-anio pTemplate="item">
+        <div class="anio-item">
+            <div>{{anio}}</div>
+        </div>
+    </ng-template>
+    </p-autoComplete>
+    </form>
+    <span d-error-msg mensaje="Debe seleccionar un Año" *ngIf="campoNoEsValido('anio')"></span>

@@ -1,0 +1,38 @@
+h1{
+    /* color:var(--bluegray-700) !important; */
+    font-family: Arial;
+    font-weight: bold;
+    font-size: 24pt;
+}
+
+h2{
+    font-family: Arial;
+    font-size: 18pt;
+    color: black;
+}
+h4{
+    color: var(--bluegray-700);
+}
+.contenedor{
+    display: flex;
+    justify-content: center;
+}
+.leyenda{
+    color:var(--bluegray-800)!important;
+    font-weight: bold;
+}
+/* 
+.legend{
+    color:var(--bluegray-600)!important;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+.legendPrincipal{
+    color:var(--bluegray-600)!important;
+    font-weight: bold;
+    font-size: 1.8rem;
+}
+
+.border{
+    border-radius: 5px;
+} */

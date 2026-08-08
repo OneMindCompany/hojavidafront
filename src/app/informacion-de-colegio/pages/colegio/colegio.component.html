@@ -1,0 +1,151 @@
+<div class="card grid surface-0 shadow-1">
+    <div class="field md:col-8 col-offset-3" *ngIf="usuario.rol=='SuperAdministrador'">
+        <label for="colegio" class="">COLEGIO AL QUE SE MATRICULA <i
+                class="pi pi-star text-pink-700 text-xs"></i></label>
+                <app-select-colegio [colegioIdInput]="formulario.get('colegioId')?.value" (colegioId)="recibirColegioId($event)"></app-select-colegio>
+    </div>
+<div class="col-8 col-offset-4">
+    <h1>Información del Colegio</h1>
+</div>
+    <div class="col-2 col-offset-3 flex">
+        <img class="" [src]="colegio.logo" alt="Sin Logo">
+        
+    </div>
+
+    <div class="col-7">
+       <div class="grid">
+        <span class="tx-lg font-semibold text-gray-700 col-2">RBD:</span>
+        <span class="col-10">{{colegio.rbd}}</span>
+        <span class="tx-lg font-semibold text-gray-700 col-2">Nombre:</span>
+        <span class="col-10">{{colegio.nombre}}</span>
+        <span class="tx-lg font-semibold text-gray-700 col-2">Telefono: </span>
+        <span class="col-10"> {{colegio.telefono}}</span>
+        <span class="tx-lg font-semibold text-gray-700 col-2">Email: </span>
+        <span class="col-10"> {{colegio.email}}</span>
+        <span class="tx-lg font-semibold text-gray-700 col-2">Dirección: </span>
+        <span class="col-10"> {{colegio.direccion}}</span>
+        <span class="tx-lg font-semibold text-gray-700 col-2">Comuna: </span>
+        <span class="col-10"> {{colegio.comunaNombre}}</span>
+    </div>
+    </div>
+  </div>
+  <div class="card grid surface-0 shadow-1 mt-1">
+    <div class="col-3">
+        <span class="tx-lg font-semibold text-gray-700 mr-2"> Plan de seguridad escolar:</span>
+        <a [href]="colegio.planSeguridadEscolar" target="blank" *ngIf="colegio.planSeguridadEscolar">
+            <button pButton pRipple type="button" label="Ver" icon="pi pi-cloud-download"
+                class="p-button-raised p-button-info p-button-text font-bold">
+            </button>
+        </a>
+
+    </div>
+    <div class="col-3">
+        <span class="tx-lg font-semibold text-gray-700 mr-2"> Plan de convivencia escolar:</span>
+        <a [href]="colegio.planConvivenciaEscolar" target="blank" *ngIf="colegio.planConvivenciaEscolar">
+            <button pButton pRipple type="button" label="Ver" icon="pi pi-cloud-download"
+                class="p-button-raised p-button-info p-button-text font-bold">
+            </button>
+        </a>
+    </div>
+    <div class="col-3">
+        <span class="tx-lg font-semibold text-gray-700 mr-2"> Proyecto educativo:</span>
+        <a [href]="colegio.proyectoEducativo" target="blank" *ngIf="colegio.proyectoEducativo">
+            <button pButton pRipple type="button" label="Ver" icon="pi pi-cloud-download"
+                class="p-button-raised p-button-info p-button-text font-bold">
+            </button>
+        </a>
+    </div>
+    <div class="col-3">
+        <span class="tx-lg font-semibold text-gray-700 mr-2"> Reglamento interno:</span>
+        <a [href]="colegio.reglamentoInterno" target="blank" *ngIf="colegio.reglamentoInterno">
+            <button pButton pRipple type="button" label="Ver" icon="pi pi-cloud-download"
+                class="p-button-raised p-button-info p-button-text font-bold">
+            </button>
+        </a>
+    </div>
+
+</div>
+<div class="card grid surface-0 shadow-1 mt-1">
+    <div class="col-2">
+        <button pButton (click)="mostrarFormulario()" icon="pi pi-external-link" label="Editar" class="p-button-rounded font-bold w-full"></button>
+    </div>
+    
+</div>
+
+
+<p-dialog header="Actualizar informacion del colegio" [(visible)]="mostrarModal" [modal]="true"
+    [style]="{width: '50vw'}" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
+    <p-toast></p-toast>
+    <form autocomplete="off" [formGroup]="formulario" class="" (ngSubmit)="guardarColegio()">
+        <div class="formgrid grid">
+            <div class="field col-3">
+                <label for="rbd" class="tx-lg font-semibold text-gray-700">RBD</label>
+                <input id="rbd" type="text" pInputText class="w-full" formControlName="rbd" />
+                <div class="mb-1" *ngIf="campoNoEsValido('rbd')">
+                    <span class="text-pink-700">RBD es obligarorio.</span>
+                </div>
+            </div>
+            <div class="field col-6">
+                <label for="nombre" class="tx-lg font-semibold text-gray-700">Nombre del Colegio</label>
+                <input id="nombre" type="text" pInputText class="w-full" formControlName="nombre" />
+                <div class="mb-1" *ngIf="campoNoEsValido('nombre')">
+                    <span class="text-pink-700">Nombre del Colegio es obligatorio.</span>
+                </div>
+            </div>
+            <div class="field col-3">
+                <label for="telefono" class="tx-lg font-semibold text-gray-700">Teléfono</label>
+                <input id="telefono" type="text" pInputText class="w-full" formControlName="telefono" />
+            </div>
+            <div class="field col-6">
+                <label for="email" class="tx-lg font-semibold text-gray-700">E-Mail</label>
+                <input id="email" type="text" pInputText class="w-full" formControlName="email" />
+
+            </div>
+            <div class="field col-6">
+                <label for="direccion" class="tx-lg font-semibold text-gray-700">Dirección</label>
+                <input id="direccion" type="text" pInputText class="w-full" formControlName="direccion" />
+            </div>
+        </div>
+        <div class="formgrid grid">
+            <div class="field col-6">
+                <label for="logo" class="tx-lg font-semibold text-gray-700">Logo</label>
+                <input id="logo" type="file" class="w-full" (change)="manejadorArchivo($event,'logo')" />
+            </div>
+            <div class="field col-6">
+                <label for="planSeguridadEscolar" class="tx-lg font-semibold text-gray-700">Plan De Seguridad
+                    Escolar</label>
+                <input id="planSeguridadEscolar" type="file" class="w-full"
+                    (change)="manejadorArchivo($event,'planSeguridadEscolar')" />
+            </div>
+            <div class="field col-6">
+                <label for="planConvivenciaEscolar" class="tx-lg font-semibold text-gray-700">Plan de Convivencia
+                    Escolar</label>
+                <input id="planConvivenciaEscolar" type="file" class="w-full"
+                    (change)="manejadorArchivo($event,'planConvivenciaEscolar')" />
+            </div>
+            <div class="field col-6">
+                <label for="reglamentoInterno" class="tx-lg font-semibold text-gray-700">Reglamento Interno</label>
+                <input id="reglamentoInterno" type="file" class="w-full"
+                    (change)="manejadorArchivo($event,'reglamentoInternoo')" />
+            </div>
+            <div class="field col-6">
+                <label for="proyectoEducativo" class="tx-lg font-semibold text-gray-700">Proyecto Educativo</label>
+                <input id="proyectoEducativo" type="file" class="w-full"
+                    (change)="manejadorArchivo($event,'proyectoEducativo')" />
+            </div>
+        </div>
+        <div *ngIf="cargando" class="flex justify-content-center align-items-center">
+            <p-progressSpinner [style]="{width: '50px', height: '50px'}" styleClass="custom-spinner" strokeWidth="8"
+                fill="#EEEEEE" animationDuration=".5s"></p-progressSpinner>
+            <span [ngStyle]="{color: 'var(--bluegray-500)'}">Validando datos, espere!...</span>
+        </div>
+
+        <button pButton pRipple label="Guardar Cambios"
+            class="p-button-raised p-button-primary p-button-rounded mb-3 mt-3" type="submit"></button>
+
+        <div class="mb-3">
+            <button pButton pRipple type="button" (click)="mostrarModal=false" label="Volver atras"
+                class="p-button-sm p-button-secondary"></button>
+        </div>
+    </form>
+</p-dialog>

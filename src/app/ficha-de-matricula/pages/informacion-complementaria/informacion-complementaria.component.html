@@ -1,0 +1,132 @@
+<form autocomplete="off" [formGroup]="formulario" (ngSubmit)="guardarDatosComplementariosDeAlumno()">
+    <!-- formulario principal -->
+    <div class="card shadow-1 mt-0 p-1">
+        <h2 class="flex justify-content-center">DATOS COMPLEMENTARIOS DEL ALUMNO</h2>
+        <fieldset pInputText>
+            <legend pInputText class="font-bold">INFORMACIÓN DE SALUD</legend>
+            <div class="formgrid grid">
+                <div class="field col">
+                    <label for="previsionId" class="">SISTEMA DE SALUD DEL ALUMNO
+                        <i class="pi pi-star text-pink-700 text-xs"></i></label>
+                    <app-select-prevision [previsionIdInput]="formulario.get('previsionId')?.value"
+                        (previsionId)="recibirPrevisionId($event)"></app-select-prevision>
+                </div>
+                <div class="field col">
+                    <label for="problemasDeSaludSeleccionados" class="">SELECCIONE PROBLEMAS DE SALUD QUE
+                        PRESENTA</label>
+                    <app-select-problemas-de-salud [problemasInput]="formulario.get('problemasDeSaludSeleccionados')?.value" (problemas)="recibirProblemas($event)">
+                    </app-select-problemas-de-salud>
+                </div>
+            </div>
+
+            <div class="formgrid grid">
+                <div class="field col">
+                    <label for="contraindicacionActividadFisica" class=" mr-4">¿POSEE CONTRAINDICACIÓN PARA REALIZAR
+                        ACTIVIDAD FÍSICA Y/O
+                        DEPORTIVA?</label>
+                    <p-radioButton pInputText [value]=true label="Si" formControlName="contraindicacionActividadFisica"
+                        class="mr-2">
+                    </p-radioButton>
+                    <p-radioButton pInputText [value]=false label="No"
+                        formControlName="contraindicacionActividadFisica">
+                    </p-radioButton>
+                </div>
+            </div>
+            <div class="formgrid grid">
+                <div class="field col">
+                    <label for="tratamientoMedico" class="mr-4">¿EN LA ACTUALIDAD SE ENCUENTRA CON TRATAMIENTO
+                        MÉDICO?</label>
+                    <p-radioButton pInputText name="tratamientoMedico" [value]=true label="Si"
+                        formControlName="tratamientoMedico" class="mr-2"></p-radioButton>
+                    <p-radioButton pInputText name="tratamientoMedico" [value]=false label="No"
+                        formControlName="tratamientoMedico"></p-radioButton>
+                </div>
+            </div>
+            <div class="formgrid grid">
+                <div class="field col">
+                    <label for="detalleSalud" class="">DETALLE LOS PROBLEMAS DE SALUD QUE PRESENTA</label>
+                    <textarea id="detalleSalud" rows="2" class="w-full" pInputTextarea
+                        formControlName="detalleSalud"></textarea>
+                </div>
+            </div>
+        </fieldset>
+        <fieldset pInputText class="mt-2">
+            <legend pInputText class="font-bold">PROCEDENCIA DEL ALUMNO</legend>
+
+            <div class="formgrid grid">
+                <div class="field col">
+                    <label for="procedenciaAlumno" class="mr-4">¿EL ALUMNO VIENE DE OTRO COLEGIO?</label>
+                    <p-radioButton pInputText [value]=true label="Si" formControlName="procedenciaAlumno" class="mr-2">
+                    </p-radioButton>
+                    <p-radioButton pInputText [value]=false label="No" formControlName="procedenciaAlumno">
+                    </p-radioButton>
+                </div>
+            </div>
+            <div *ngIf="formulario.controls.procedenciaAlumno.value">
+                <div class="formgrid grid">
+                    <div class="field col">
+                        <label for="nombreOtroColegio" class="">NOMBRE DEL COLEGIO <i
+                                class="pi pi-star text-pink-700 text-xs"></i></label>
+                        <input id="nombreOtroColegio" type="text" pInputText class="w-full"
+                            formControlName="nombreOtroColegio" />
+                        <div class="mb-1" *ngIf="campoNoEsValido('nombreOtroColegio')">
+                            <span class="text-pink-700">El nombre del otro colegio es obligarorio.</span>
+                        </div>
+                    </div>
+                    <div class="field col">
+                        <label for="dependenciaOtroColegio" class="mr-4">DEPENDENCIA DEL OTRO COLEGIO</label>
+                        <div id="dependenciaOtroColegio">
+                            <p-radioButton pInputText value="Municipal" label="Municipal"
+                                formControlName="dependenciaOtroColegio" class="mr-2"></p-radioButton>
+                            <p-radioButton pInputText value="Subvencionado" label="Part. Subvencionado"
+                                formControlName="dependenciaOtroColegio" class="mr-2">
+                            </p-radioButton>
+                            <p-radioButton pInputText value="Pagado" label="Part. Pagado"
+                                formControlName="dependenciaOtroColegio"></p-radioButton>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="formgrid grid">
+                    <div class="field col">
+                        <label for="motivoDeCambio" class="">MOTIVO POR EL CUAL SE CAMBIA A ESTE COLEGIO <i
+                                class="pi pi-star text-pink-700 text-xs"></i></label>
+                        <input id="motivoDeCambio" type="text" pInputText class="w-full"
+                            formControlName="motivoDeCambio" />
+                        <div class="mb-1" *ngIf="campoNoEsValido('motivoDeCambio')">
+                            <span class="text-pink-700">El Motivo De Cambio es obligarorio.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+    <!--  pie de formulario -->
+    <div class="card shadow-2">
+        <div class="col-12">
+            <div *ngIf="cargando" class="flex justify-content-center align-items-center">
+                <p-progressSpinner [style]="{width: '50px', height: '50px'}" styleClass="custom-spinner" strokeWidth="8"
+                    fill="#EEEEEE" animationDuration=".5s"></p-progressSpinner>
+                <span [ngStyle]="{color: 'var(--bluegray-500)'}">Registrando Informacion, espere!...</span>
+            </div>
+        </div>
+
+        <div class="card grid">
+            <div class="col">
+                <button pButton routerLink='/fichadematricula/alumno' label="Anterior" icon="pi pi-angle-double-left"
+                    iconPos="left" class="p-button-primary w-6 mb-2 ml-2" [disabled]="cargando"></button>
+            </div>
+
+
+            <div class="col flex justify-content-end">
+
+                <button pButton label="Guardar y Siguiente" icon="pi pi-angle-double-right" iconPos="right"
+                    class="p-button-primary w-6 mb-2 mr-2 "></button>
+
+            </div>
+        </div>
+    </div>
+
+</form>
+<!-- <h2>Formulario</h2>
+<pre>{{formulario.value |json}}</pre> -->

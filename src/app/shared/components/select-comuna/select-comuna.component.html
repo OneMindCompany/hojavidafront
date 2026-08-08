@@ -1,0 +1,11 @@
+<form [formGroup]="form">
+    <p-autoComplete formControlName="Comuna" [suggestions]="comunasFiltradas" (completeMethod)="filtrarComuna($event)"
+        field="nombre" [dropdown]="true" styleClass="w-full">
+        <ng-template let-comuna pTemplate="item">
+            <div class="comuna-item">
+                <div>{{comuna.nombre}}</div>
+            </div>
+        </ng-template>
+    </p-autoComplete>
+</form>
+<span d-error-msg mensaje="Debe seleccionar un Comuna" *ngIf="campoNoEsValido('Comuna')"></span>

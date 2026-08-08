@@ -1,0 +1,11 @@
+<form [formGroup]="form">
+    <p-autoComplete formControlName="estadoCivil" [suggestions]="estadosCivilesFiltrados" (completeMethod)="filtrarEstadoCivil($event)"
+        field="nombre" [dropdown]="true" styleClass="w-full">
+        <ng-template let-estadoCivil pTemplate="item">
+            <div class="estadoCivil-item">
+                <div>{{estadoCivil.nombre}}</div>
+            </div>
+        </ng-template>
+    </p-autoComplete>
+</form>
+<span d-error-msg mensaje="Debe seleccionar un Estado Civil" *ngIf="campoNoEsValido('estadoCivil')"></span>

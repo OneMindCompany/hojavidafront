@@ -1,0 +1,71 @@
+<div class="card">
+	<form autocomplete="off" [formGroup]="formulario" (ngSubmit)="guardarNuevaMatricula()">
+		<p-splitter styleClass="mb-0 mt-2">
+
+			<ng-template pTemplate>
+
+				<div class="formgrid grid">
+					<h2 class=" col-12 flex justify-content-center">DATOS DE MATRICULA</h2>
+					<div class="field md:col-8 col-offset-3" *ngIf="usuario.rol=='Apoderado'">
+						<label for="colegio" class="">COLEGIO AL QUE SE MATRICULA <i
+								class="pi pi-star text-pink-700 text-xs"></i></label>
+								<app-select-colegio [colegioIdInput]="formulario.get('colegioId')?.value" (colegioId)="recibirColegioId($event)"></app-select-colegio>
+					</div>
+					<div class="field col-8 col-offset-3">
+						<label for="anio" class="">AÑO DE MATRÍCULA <i
+								class="pi pi-star text-pink-700 text-xs"></i></label>
+								<app-select-anio [anioInput]="formulario.get('anio')?.value" (anio)="recibirAnio($event)"></app-select-anio>
+					</div>
+					<div class="field col-8 col-offset-3">
+						<label for="curso" class="">CURSO EN QUE SE MATRICULA <i
+								class="pi pi-star text-pink-700 text-xs"></i></label>
+								<app-select-curso-colegio [colegioId]="formulario.get('colegioId')?.value" [anio]="formulario.get('anio')?.value" [cursoInput]="formulario.get('curso')?.value"
+								(curso)="recibirCurso($event)">
+								</app-select-curso-colegio>
+					</div>
+					<div class="field col-8 col-offset-3">
+						<label for="rut" class="">RUT DEL ALUMNO (CON DIGITO VERIFICADOR)<i
+								class="pi pi-star text-pink-700 text-xs"></i></label>
+						<input id="rut" type="text" pInputText class="w-full" formControlName="rut" />
+						<span for="rut" class="">Ejm: 25.868.658-K ó  25868658K</span>
+						<span d-error-msg mensaje="El RUT es obligarorio" *ngIf="campoNoEsValido('rut')"></span>
+					</div>
+				</div>
+
+
+			</ng-template>
+			<ng-template pTemplate>
+				<div class="card ml-5 mr-5">
+					<h2 class="flex justify-content-center">INDICACIONES</h2>
+					<h4 class="">Formularios:</h4>
+					Se debe llenar todos los campos requeridos, una vez completado el formulario, debe presionar el
+					boton "Guardar y Siguiente" que guarda la información y le lleva al paso Siguiente.
+					<h4 class="">Campos Requeridos:</h4>
+					Los campos requeridos están marcados con un <i class="pi pi-star text-pink-700 text-xs"></i>.
+				</div>
+
+			</ng-template>
+
+		</p-splitter>
+		<div class="card shadow-2">
+			<div class="col-12">
+				<div *ngIf="cargando" class="flex justify-content-center align-items-center">
+					<p-progressSpinner [style]="{width: '50px', height: '50px'}" styleClass="custom-spinner"
+						strokeWidth="8" fill="#EEEEEE" animationDuration=".5s"></p-progressSpinner>
+					<span [ngStyle]="{color: 'var(--bluegray-500)'}">Registrando Informacion, espere!...</span>
+				</div>
+			</div>
+			<div class="card grid">
+				<div class="col flex justify-content-center">
+				</div>
+				<div class="col flex justify-content-end">
+						<button pButton label="Guardar y Siguiente" icon="pi pi-angle-double-right" iconPos="right"
+						class="p-button-primary w-6 mb-2 mr-2" (click)="guardarNuevaMatricula()" [disabled]="cargando||formulario.invalid"></button>					
+				</div>
+			</div>
+		
+		</div>
+
+	</form>
+
+</div>

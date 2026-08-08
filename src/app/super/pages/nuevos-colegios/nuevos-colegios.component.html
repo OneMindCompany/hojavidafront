@@ -1,0 +1,77 @@
+<div class="card">
+    <p-toast></p-toast>
+    <form autocomplete="off" [formGroup]="formulario" (ngSubmit)="guardarDatosGenerales()">
+        <p-splitter styleClass="mb-0 mt-0">
+
+            <ng-template pTemplate>
+
+                <div class="formgrid grid">
+                    <h2 class=" col-12 flex justify-content-center">IMPORTACION DE ARCHIVOS SIGE</h2>
+                    <div class="field md:col-8 col-offset-3">
+                        <label for="opcion" class="tx-lg font-semibold text-gray-700">Archivo Sige <i
+                                class="pi pi-star text-pink-700 text-xs"></i></label>
+                        <p-dropdown id="opcion" formControlName="categoriaId" [options]="opciones" styleClass="w-full"
+                            optionLabel="label" placeholder="Seleccione Información a Subir"></p-dropdown>
+
+                        <div class="mb-1" *ngIf="campoNoEsValido('categoriaId')">
+                            <span class="text-pink-700">Debe seleccionar una Categoria</span>
+                        </div>
+                    </div>
+                    <div class="field col-8 col-offset-3">
+                        <label for="gestion" class="tx-lg font-semibold text-gray-700">Año al que Correspondera la
+                            Información <i class="pi pi-star text-pink-700 text-xs"></i></label>
+                        <p-dropdown id="gestion" formControlName="gestion" [options]="anios" styleClass="w-full"
+                            optionLabel="label" placeholder="Seleccione Año">
+                        </p-dropdown>
+                        <div class="mb-1" *ngIf="campoNoEsValido('gestion')">
+                            <span class="text-pink-700">Debe seleccionar un año.</span>
+                        </div>
+                    </div>
+
+                    <div class="field md:col-8 col-offset-3">
+                        <label for="archivo" class="tx-lg font-semibold text-gray-700">Seleccionar Archivo "Debe Estar
+                            en Formato .XLSX" <i class="pi pi-star text-pink-700 text-xs"></i></label>
+                        <input id="archivo" formControlName="archivo" type="file" class="w-full"
+                            (change)="manejadorArchivo($event)" accept=".xlsx" />
+                        <div class="mb-1" *ngIf="campoNoEsValido('archivo')">
+                            <span class="p-error">Debe seleccionar un Archivo Excel.</span>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div *ngIf="cargando" class="flex justify-content-center align-items-center">
+                            <p-progressSpinner [style]="{width: '50px', height: '50px'}" styleClass="custom-spinner"
+                                strokeWidth="8" fill="#EEEEEE" animationDuration=".5s"></p-progressSpinner>
+                            <span [ngStyle]="{color: 'var(--bluegray-500)'}">Registrando Informacion, espere!...</span>
+                        </div>
+                    </div>
+                    <div class="field md:col-8 col-offset-3">
+                        <button pButton pRipple label="Subir Información"
+                            class="p-button-raised p-button-primary p-button-rounded" type="submit"
+                            [disabled]="formulario.invalid||cargando"></button>
+                    </div>
+                </div>
+
+
+            </ng-template>
+            <ng-template pTemplate>
+                <div class="card ml-5 mr-5">
+                    <h2 class="flex justify-content-center">INDICACIONES</h2>
+                    <h4 class="tx-lg font-semibold text-gray-700">Oden Nuevo Colegio:</h4>
+                    Para cualquier colegio: Primero, debe subir la matricula de alumnos, en segundo lugar los Profesores
+                    y por último los asistentes, en ese orden secuencial.
+                    <h4 class="tx-lg font-semibold text-gray-700">Actualizar Información:</h4>
+                    La matrícula puede subirse en cualquier orden, los profesores siempre deben subirse antes que los
+                    asistentes,
+                    si los profesores no se actualizan, entonces, puede subir los asistentes solamente. En ningun caso
+                    se debe subir asistentes antes que profesores si se suben ambos.
+                    <h4 class="tx-lg font-semibold text-gray-700">Campos Requeridos:</h4>
+                    Los campos requeridos están marcados con un <i class="pi pi-star text-pink-700 text-xs"></i>.
+                </div>
+
+            </ng-template>
+
+        </p-splitter>
+
+    </form>
+
+</div>

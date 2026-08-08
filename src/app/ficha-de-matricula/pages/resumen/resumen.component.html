@@ -1,0 +1,430 @@
+<div class="contenedor">
+    <div id="matriculaReporte" class="mr-5" style="width:27cm">
+        <div *ngIf="cargando" class="flex justify-content-center align-items-center">
+            <p-progressSpinner [style]="{width: '50px', height: '50px'}" styleClass="custom-spinner" strokeWidth="8"
+                fill="#EEEEEE" animationDuration=".5s"></p-progressSpinner>
+            <span [ngStyle]="{color: 'var(--bluegray-500)'}">Generando Ficha de Matrícula, Espere!...</span>
+        </div>
+        <div class="flex justify-content-center mt-4">
+            <button pButton label="IMPRIMIR" icon="pi pi-print" iconPos="left" class="p-button-primary w-6  mb-2"
+                (click)="generarMatriculaPDF()" [disabled]="cargando"></button>
+        </div>
+        <div class="grid justify-content-begin align-items-center">
+            <div class="col-fixed" style="width: 70px;">
+                <img class="border" [src]="fichaDeMatriculaReporte.logoColegio" width="64">
+            </div>
+
+            <div class="col-8">
+                <div class="grid">
+                    <div class="col-12 m-0 pb-0">{{fichaDeMatriculaReporte.nombreColegio}}</div>
+                    <div class="col-12 m-0 pt-0">{{fichaDeMatriculaReporte.rbdColegio}}</div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="grid">
+                    <div class="col-12 m-0 pb-0">Fecha:{{fichaDeMatriculaReporte.fecha}}</div>
+                    <div class="col-12 m-0 pb-0">Usuario:{{fichaDeMatriculaReporte.usuario}}</div>
+                </div>
+            </div>
+        </div>
+        <!-- <img [src]="fichaDeMatriculaReporte.logoColegio" alt=""> -->
+        <hr>
+        <div class="grid">
+            <div class="col-10 text-center">
+                <h1>FICHA DE MATRÍCULA</h1>
+            </div>
+            <div class="col-2 text-left">
+                <h1>Nro: {{fichaDeMatriculaReporte.numeroMatricula}}</h1>
+            </div>
+        </div>
+
+
+
+        <div class="grid">
+            <div class="col-2"> <img class="border" height="100px" [src]="fichaDeMatriculaReporte.fotografiaAlumno"></div>
+            <div class="col-10">
+                <div class="grid">
+                    <div class="col leyenda">
+                        Alumno<br>
+                        Año <br>
+                        Curso<br>
+                        Edad<br>
+               
+                    </div>
+                    <div class="col contenido">
+                        {{fichaDeMatriculaReporte.nombreAlumno}} {{fichaDeMatriculaReporte.apellidoPAlumno}}
+                        {{fichaDeMatriculaReporte.apellidoMAlumno}}<br>
+                        {{fichaDeMatriculaReporte.gestion}}<br>
+                        {{fichaDeMatriculaReporte.nombreCurso}} "{{fichaDeMatriculaReporte.letraCurso}}"<br>
+                        {{fichaDeMatriculaReporte.edadAlumno}}<br>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+
+
+
+
+        <fieldset class="mt-2 p-5">
+            <legend class="legendPrincipal">DATOS DEL ALUMNO</legend>
+            <div class="grid">
+                <div class="col-6">
+                    <fieldset class="grid">
+                        <legend class="legend">Información Personal</legend>
+
+                        <div class="col leyenda">              
+                            RUN<br>
+                            Genero<br>
+                            Fecha de Nacimiento<br>
+                            Nombre Social <br>
+                            Nacionalidad<br>
+                            Etnia<br>
+                            Religion
+                        </div>
+                        <div class="col contenido">
+                            {{fichaDeMatriculaReporte.runAlumno}}<br>
+                            {{fichaDeMatriculaReporte.generoAlumno}}<br>
+                            {{fichaDeMatriculaReporte.fechaDeNacimientoAlumno}}<br>
+                            {{fichaDeMatriculaReporte.nombreSocialAlumno}}<br>
+                            {{fichaDeMatriculaReporte.nacionalidadAlumno}}<br>
+                            {{fichaDeMatriculaReporte.etniaAlumno}}<br>
+                            {{fichaDeMatriculaReporte.religionAlumno}}
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="col-6">
+                    <fieldset class="grid">
+                        <legend class="legend">Dirección y Contacto</legend>
+                        <div class="col leyenda">
+                            Calle <br>
+                            Número de Casa <br>
+                            Departamento<br>
+                            Comuna<br>
+                            Region<br>
+                            Correo Electrónico<br>
+                            Celular
+                            
+                        </div>
+                        <div class="col contenido">
+                            {{fichaDeMatriculaReporte.calleAlumno}}<br>
+                            {{fichaDeMatriculaReporte.numeroAlumno}}<br>
+                            {{fichaDeMatriculaReporte.departamentoAlumno}}<br>
+                            {{fichaDeMatriculaReporte.comunaAlumno}}<br>
+                            {{fichaDeMatriculaReporte.regionAlumno}}<br>
+                            {{fichaDeMatriculaReporte.correoElectronicoAlumno}}<br>
+                            {{fichaDeMatriculaReporte.celularAlumno}}
+                        </div>
+                    </fieldset>
+
+                </div>
+
+
+
+                <div class="col-12">
+                    <fieldset class="grid">
+                        <legend class="legend">Información De Salud</legend>
+                        <div class="col leyenda">
+                            Seguro de Salud<br>
+                            ¿Tiene Contraindicación para Realizar Actividad Física?<br>
+                            ¿Actualmente está en Tratamiento Médico?<br>
+                            Detalles del Estado de Salud<br>
+                            Problemas de Salud
+                        </div>
+                        <div class="col contenido">
+                            {{fichaDeMatriculaReporte.previsionDeSaludAlumno}}<br>
+                            <ng-container
+                                *ngIf="fichaDeMatriculaReporte.contraindicacionDeActividadFisica; else actividadFisica">
+                                Si
+                            </ng-container>
+                            <ng-template #actividadFisica>
+                                No
+                            </ng-template>
+                            <br>
+                            <ng-container *ngIf="fichaDeMatriculaReporte.tratamientoMedico; else tratamiento">
+                                Si
+                            </ng-container>
+                            <ng-template #tratamiento>
+                                No
+                            </ng-template>
+                            <br>
+                            {{fichaDeMatriculaReporte.detalleDeSalud}}<br>
+                            {{fichaDeMatriculaReporte.problemasSalud}}
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="col-12">
+                    <fieldset class="grid">
+                        <legend class="legend">DATOS FAMILIARES</legend>
+                        <div class="col leyenda">
+                            Vive Con<br>
+                            Hermanos en el Colegio
+                        </div>
+                        <div class="col contenido">
+                            {{fichaDeMatriculaReporte.viveCon}}<br>
+                            {{fichaDeMatriculaReporte.hermanos}}
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="col-12">
+                    <fieldset class="grid">
+                        <legend class="legend">COLEGIO DE PROCEDENCIA DEL ALUMNO</legend>
+                        <div class="col leyenda">
+                            ¿Viene de Otro Colegio?<br>
+                            Nombre del Otro Colegio<br>
+                            Dependencia del Otro Colegio<br>
+                            Motivo por el que se Cambia<br>
+                        </div>
+                        <div class="col contenido">
+                            <ng-container *ngIf="fichaDeMatriculaReporte.procedenciaMismoColegio; else otroColegio">
+                                Si
+                            </ng-container>
+                            <ng-template #otroColegio>
+                                No
+                            </ng-template>
+                            <br>
+                            {{fichaDeMatriculaReporte.nombreDelOtroColegio}}<br>
+                            {{fichaDeMatriculaReporte.dependenciaDelOtroColegio}}<br>
+                            {{fichaDeMatriculaReporte.motivoDeCambio}}<br>
+                        </div>
+                    </fieldset>
+                </div>
+              
+            </div>
+        </fieldset>
+        <fieldset class="mt-5 p-5">
+            <legend class="legendPrincipal">DATOS DEL APODERADO TITULAR</legend>
+            <div class="grid">
+                <div class="col-12">
+                    <fieldset class="grid">
+                        <legend class="legend">Información Personal</legend>
+                        <div class="col-5 leyenda">
+                            Parentesco con Alumno<br>
+                            Nombre Completo <br>
+                            RUN<br>
+                            Estado Civil<br>
+                            Genero<br>
+                            Fecha de Nacimiento<br>
+                            Nacionalidad<br>
+                            Etnia<br>
+                            Religión
+                        </div>
+                        <div class="col-7 contenido">
+                            {{fichaDeMatriculaReporte.parentescoApoderadoT}}<br>
+                            {{fichaDeMatriculaReporte.nombreApoderadoT}}
+                            {{fichaDeMatriculaReporte.apellidoPApoderadoT}}
+                            {{fichaDeMatriculaReporte.apellidoMApoderadoT}}<br>
+                            {{fichaDeMatriculaReporte.runApoderadoT}}<br>
+                            {{fichaDeMatriculaReporte.estadoCivilApoderadoT}}<br>
+                            {{fichaDeMatriculaReporte.generoApoderadoT}}<br>
+                            {{fichaDeMatriculaReporte.fechaDeNacimientoApoderadoT}}<br>
+                            {{fichaDeMatriculaReporte.nacionalidadApoderadoT}}<br>
+                            {{fichaDeMatriculaReporte.etniaApoderadoT}}<br>
+                            {{fichaDeMatriculaReporte.religionApoderadoT}}
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="col-6">
+                    <fieldset class="grid">
+                        <legend class="legend">Dirección y Contacto</legend>
+                        <div class="col-5 leyenda">
+                            Tenencia de Vivienda<br>
+                            Calle <br>
+                            Número de Casa <br>
+                            Departamento<br>
+                            Comuna<br>
+                            Región<br>  
+                            Correo Electrónico<br>                      
+                            Celular<br>
+                            Teléfono Fijo<br>
+                            
+                        </div>
+                        <div class="col-7 contenido">
+                            {{fichaDeMatriculaReporte.tenenciaDeViviendaApoderadoT}}<br>
+                            {{fichaDeMatriculaReporte.calleApoderadoT}}<br>
+                            {{fichaDeMatriculaReporte.numeroApoderadoT}}<br>
+                            {{fichaDeMatriculaReporte.departamentoApoderadoT}}<br>
+                            {{fichaDeMatriculaReporte.comunaApoderadoT}}<br>
+                            {{fichaDeMatriculaReporte.regionApoderadoT}}<br>
+                            {{fichaDeMatriculaReporte.correoElectronicoApoderadoT}}<br>
+                            {{fichaDeMatriculaReporte.celularApoderadoT}}<br>
+                            {{fichaDeMatriculaReporte.telefonoFijoApoderadoT}}<br>
+                            
+                        </div>
+                    </fieldset>
+
+                </div>
+                <div class="col-6">
+                    <fieldset class="grid">
+                        <legend class="legend">Formación y Trabajo</legend>
+                        <div class="col-5 leyenda">
+                            Nivel Educacional<br>
+                            Profesión <br>
+                            Lugar de Trabajo <br>
+                            Correo Electrónico<br>
+                            Celular <br>
+                            Teléfono Fijo<br>
+                            
+                        </div>
+                        <div class="col-7 contenido">
+                            {{fichaDeMatriculaReporte.nivelEducacionalApoderadoT}}<br>
+                            {{fichaDeMatriculaReporte.profesionApoderadoT}}<br>
+                            {{fichaDeMatriculaReporte.lugarDeTrabajoApoderadoT}}<br>
+                            {{fichaDeMatriculaReporte.correoElectronicoTrabajoApoderadoT}}<br>
+                            {{fichaDeMatriculaReporte.celularTrabajoApoderadoT}}<br>
+                            {{fichaDeMatriculaReporte.telefonoFijoTrabajoApoderadoT}}<br>
+                            
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+        </fieldset>
+        <fieldset class="mt-2 p-5">
+            <legend class="legendPrincipal">DATOS DEL APODERADO SUPLENTE</legend>
+            <div class="grid">
+                <div class="col-12">
+                    <fieldset class="grid">
+                        <legend class="legend">Información Personal</legend>
+                        <div class="col-5 leyenda">
+                            Parentesco Con Alumno<br>
+                            Nombre Completo <br>
+                            RUN<br>
+                            Estado Civil<br>
+                            Genero<br>
+                            Fecha de Nacimiento<br>
+                            Nacionalidad<br>
+                            Etnia<br>
+                            Religión<br>
+                        </div>
+                        <div class="col-7 contenido">
+                            {{fichaDeMatriculaReporte.parentescoApoderadoS}}<br>
+                            {{fichaDeMatriculaReporte.nombreApoderadoS}}
+                            {{fichaDeMatriculaReporte.apellidoPApoderadoS}}
+                            {{fichaDeMatriculaReporte.apellidoMApoderadoS}}<br>
+                            {{fichaDeMatriculaReporte.runApoderadoS}}<br>
+                            {{fichaDeMatriculaReporte.estadoCivilApoderadoS}}<br>
+                            {{fichaDeMatriculaReporte.generoApoderadoS}}<br>
+                            {{fichaDeMatriculaReporte.fechaDeNacimientoApoderadoS}}<br>
+                            {{fichaDeMatriculaReporte.nacionalidadApoderadoS}}<br>
+                            {{fichaDeMatriculaReporte.etniaApoderadoS}}<br>
+                            {{fichaDeMatriculaReporte.religionApoderadoS}}<br>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="col-6">
+                    <fieldset class="grid">
+                        <legend class="legend">Dirección y Contacto</legend>
+                        <div class="col-5 leyenda">
+                            Tenencia de Vivienda<br>
+                            Calle <br>
+                            Número de Casa <br>
+                            Departamento<br>
+                            Comuna<br>
+                            Región<br>
+                            Correo Electrónico<br>
+                            Celular<br>
+                            Teléfono Fijo<br>
+                            
+                        </div>
+                        <div class="col-7 contenido">
+                            {{fichaDeMatriculaReporte.tenenciaDeViviendaApoderadoS}}<br>
+                            {{fichaDeMatriculaReporte.calleApoderadoS}}<br>
+                            {{fichaDeMatriculaReporte.numeroApoderadoS}}<br>
+                            {{fichaDeMatriculaReporte.departamentoApoderadoS}}<br>
+                            {{fichaDeMatriculaReporte.comunaApoderadoS}}<br>
+                            {{fichaDeMatriculaReporte.regionApoderadoS}}<br>
+                            {{fichaDeMatriculaReporte.correoElectronicoApoderadoS}}<br>
+                            {{fichaDeMatriculaReporte.celularApoderadoS}}<br>
+                            {{fichaDeMatriculaReporte.telefonoFijoApoderadoS}}<br>
+                            
+                        </div>
+                    </fieldset>
+
+                </div>
+                <div class="col-6">
+                    <fieldset class="grid">
+                        <legend class="legend">Formación y Trabajo</legend>
+                        <div class="col-5 leyenda">
+                            Nivel Educacional<br>
+                            Profesión <br>
+                            Lugar de Trabajo <br>
+                            Correo Electrónico<br>
+                            Celular<br>
+                            Teléfono Fijo<br>
+                            
+                        </div>
+                        <div class="col-7 contenido">
+                            {{fichaDeMatriculaReporte.nivelEducacionalApoderadoS}}<br>
+                            {{fichaDeMatriculaReporte.profesionApoderadoS}}<br>
+                            {{fichaDeMatriculaReporte.lugarDeTrabajoApoderadoS}}<br>
+                            {{fichaDeMatriculaReporte.correoElectronicoTrabajoApoderadoS}}<br>
+                            {{fichaDeMatriculaReporte.celularTrabajoApoderadoS}}<br>
+                            {{fichaDeMatriculaReporte.telefonoFijoTrabajoApoderadoS}}<br>
+                            
+                        </div>
+                    </fieldset>
+
+                </div>
+            </div>
+        </fieldset>
+        <fieldset class="mt-2 p-5">
+            <legend class="legendPrincipal">DATOS DEL ENCARGADO DE RETIRO</legend>
+            <div class="grid">
+                <div class="col-12">
+                    <fieldset class="grid">
+                        <legend class="legend">Información Personal y de Contacto</legend>
+                        <div class="col-5 leyenda">
+
+                            Nombre Completo <br>
+                            RUN<br>
+                            Dirección<br>
+                            Teléfono Fijo<br>
+                            Celular<br>
+                            Correo Electrónico<br>
+
+                        </div>
+                        <div class="col-7 contenido">
+                            {{fichaDeMatriculaReporte.nombreEncargado}}<br>
+                            {{fichaDeMatriculaReporte.rutEncargado}}<br>
+                            {{fichaDeMatriculaReporte.direccionEncargado}}<br>
+                            {{fichaDeMatriculaReporte.telefonoEncargado}}<br>
+                            {{fichaDeMatriculaReporte.celularEncargado}}<br>
+                            {{fichaDeMatriculaReporte.emailEncargado}}<br>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+        </fieldset>
+        <fieldset class="mt-2 p-5">
+            <legend class="legendPrincipal">COMPROMISO CON EL COLEGIO</legend>
+            <div>
+                {{fichaDeMatriculaReporte.compromiso}}
+            </div>
+            <br>
+
+        </fieldset>
+        <div class="card">
+            <div class="h-10rem"></div>
+            <div class="flex flex-wrap justify-content-center card-container">
+                <div
+                    class="border-top-2 border-gray-700 w-24rem h-4rem surface-overlay font-semibold m-2 flex align-items-center justify-content-center">
+                    Firma Apoderado Titular<br>
+                    {{fichaDeMatriculaReporte.nombreApoderadoT}}
+                    {{fichaDeMatriculaReporte.apellidoPApoderadoT}}
+                    {{fichaDeMatriculaReporte.apellidoMApoderadoT}}<br>
+                    RUN: {{fichaDeMatriculaReporte.runApoderadoT}}<br>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+<div class="flex justify-content-center mt-4">
+    <button pButton label="IMPRIMIR" icon="pi pi-print" iconPos="left" class="p-button-primary w-6  mb-2"
+        (click)="generarMatriculaPDF()" [disabled]="cargando"></button>
+</div>
+<!-- <app-imprimir-matricula [matriculaIdInput]="matriculaId"></app-imprimir-matricula> -->
+<!-- <pre>{{fichaDeMatriculaReporte|json}}</pre> -->

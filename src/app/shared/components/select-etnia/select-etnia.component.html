@@ -1,0 +1,10 @@
+<form [formGroup]="form">
+    <p-autoComplete formControlName="Etnia" [suggestions]="etniasFiltradas" (completeMethod)="filtrarEtnia($event)"
+        field="descripcion" [dropdown]="true" styleClass="w-full">
+        <ng-template let-etnia pTemplate="item">
+            <div class="etnia-item">
+                <div>{{etnia.descripcion}}</div>
+            </div>
+        </ng-template>
+    </p-autoComplete>
+</form>

@@ -1,0 +1,45 @@
+<div class="card">
+    <h2>LISTADO DE MATRÍCULAS</h2>
+    <div class="col-12">
+        <div *ngIf="cargando" class="flex justify-content-center align-items-center">
+            <p-progressSpinner [style]="{width: '50px', height: '50px'}" styleClass="custom-spinner"
+                strokeWidth="8" fill="#EEEEEE" animationDuration=".5s"></p-progressSpinner>
+            <span [ngStyle]="{color: 'var(--bluegray-500)'}">Obteniendo información, espere!...</span>
+        </div>
+    </div>
+    <p-table [value]="preMatriculas">
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="nro" style="width: 5rem">Nro. <p-sortIcon field="nro"></p-sortIcon></th>
+                <th pSortableColumn="nombre">Nombre Completo <p-sortIcon field="nombre"></p-sortIcon></th>
+                <th pSortableColumn="rut">RUT <p-sortIcon field="rut"></p-sortIcon></th>
+                <th pSortableColumn="curso">Curso <p-sortIcon field="curso"></p-sortIcon></th>
+                <th pSortableColumn="anio" style="width: 7rem">Año <p-sortIcon field="anio"></p-sortIcon></th>
+                <th pSortableColumn="colegio">Colegio <p-sortIcon field="colegio"></p-sortIcon></th>
+                <th pSortableColumn="estado" style="width: 10rem">Estado <p-sortIcon field="estado"></p-sortIcon></th>
+                <th>Operaciones</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-prematricula>
+            
+            <tr>
+                <td>{{prematricula.nro}}</td>
+                <td>{{prematricula.nombre}}</td>
+                <td>{{prematricula.rut}}</td>
+                <td>{{prematricula.curso}}</td>
+                <td>{{prematricula.anio }}</td>
+                <td>{{prematricula.colegio }}</td>
+                <td><span class="custom-badge status-danger">{{prematricula.estado }}</span></td>
+                <td> 
+                    <button pButton pRipple type="button" label="Editar" class="p-button-sm p-button-outlined p-button-rounded" (click)="editar(prematricula.matriculaId)"></button>
+                    <button [id]=prematricula.matriculaId pButton pRipple type="button" label="Imprimir" class="p-button-sm p-button-rounded" (click)="generarMatriculaPDF(prematricula.matriculaId)" [disabled]="cargando">
+                        <!-- <p-progressSpinner *ngIf="generandoPDF" [style]="{width: '15px', height: '15px'}" styleClass="custom-spinner" strokeWidth="8" fill="#EEEEEE" animationDuration=".5s"></p-progressSpinner> -->
+                    </button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+  
+</div>
+
+

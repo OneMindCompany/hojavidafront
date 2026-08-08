@@ -1,0 +1,11 @@
+<form [formGroup]="form">
+    <p-autoComplete formControlName="prevision" [suggestions]="previsionesFiltradas" (completeMethod)="filtrarPrevision($event)"
+        field="descripcion" [dropdown]="true" styleClass="w-full">
+        <ng-template let-prevision pTemplate="item">
+            <div class="prevision-item">
+                <div>{{prevision.descripcion}}</div>
+            </div>
+        </ng-template>
+    </p-autoComplete>
+</form>
+<span d-error-msg mensaje="Debe seleccionar un Prevision" *ngIf="campoNoEsValido('prevision')"></span>

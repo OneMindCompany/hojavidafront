@@ -1,0 +1,11 @@
+<form [formGroup]="form">
+    <p-autoComplete formControlName="Region" [suggestions]="regionesFiltradas" (completeMethod)="filtrarRegion($event)"
+        field="nombre" [dropdown]="true" styleClass="w-full">
+        <ng-template let-region pTemplate="item">
+            <div class="region-item">
+                <div>{{region.nombre}}</div>
+            </div>
+        </ng-template>
+    </p-autoComplete>
+</form>
+<span d-error-msg mensaje="Debe seleccionar un Region" *ngIf="campoNoEsValido('Region')"></span>

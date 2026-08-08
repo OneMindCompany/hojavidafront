@@ -1,0 +1,75 @@
+<p-toast></p-toast>
+<div class="card">
+    <h2>LISTA DE DECLARACIONES DE COMPROMISO</h2>
+    <div class=" flex justify-content-end">
+        <button (click)="showMaximizableDialog()" pButton type="button" label="Crear Nueva Declaración"
+            class="p-button-rounded p-button-info"></button>
+    </div>
+    <div class="col-12">
+        <div *ngIf="cargando" class="flex justify-content-center align-items-center">
+            <p-progressSpinner [style]="{width: '50px', height: '50px'}" styleClass="custom-spinner" strokeWidth="8"
+                fill="#EEEEEE" animationDuration=".5s"></p-progressSpinner>
+            <span [ngStyle]="{color: 'var(--bluegray-500)'}">Obteniendo información, espere!...</span>
+        </div>
+    </div>
+    <p-table [value]="declaraciones">
+        <ng-template pTemplate="header">
+            <tr>
+
+                <th style="width: 5rem">Nro</th>
+                <th>Descripción</th>
+                <th style="width: 10rem">Estado</th>
+                <th style="width: 20rem">Operaciones</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-declaracion>
+
+            <tr>
+                <td>{{declaracion.nro}}</td>
+                <td>{{declaracion.descripcion}}</td>
+                <td><span *ngIf="declaracion.vigente; else novigente" class="custom-badge status-success">Vigente</span>
+                </td>
+                <ng-template #novigente>
+                    <span class="custom-badge status-danger">No Vigente</span>
+                </ng-template>
+
+                <td>
+                    <button pButton pRipple type="button" label="Editar"
+                        class="p-button-sm p-button-outlined p-button-rounded"
+                        (click)="editar(declaracion.id);showMaximizableDialog()"></button>
+                    <span class="ml-2"></span>
+                    <button pButton pRipple type="button" label="Eliminar"
+                        class="p-button-sm p-button-outlined p-button-rounded p-button-danger"
+                        (click)="eliminar(declaracion.id)"></button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+
+</div>
+
+<p-dialog header="Declaración de Compromiso" [(visible)]="displayMaximizable" [modal]="true" [style]="{width: '50vw'}"
+    [draggable]="false" [resizable]="false">
+    <form autocomplete="off" [formGroup]="formulario" (ngSubmit)="guardar()">
+        <div class="formgrid grid">
+            <div class="field col">
+                <label for="descripcion" class="">DECLARACIÓN DE COMPROMISO</label>
+                <textarea id="descripcion" rows="10" class="w-full" pInputTextarea formControlName="descripcion"></textarea>
+                <!-- <p-editor formControlName="descripcion" [style]="{'height':'320px'}"></p-editor> -->
+            </div>
+        </div>
+        <div class="formgrid grid">
+            <div class="field col">
+                <label for="vigente" class="mr-4"></label>
+                <p-radioButton pInputText name="vigente" [value]=true label="Vigente" formControlName="vigente" class="mr-2"></p-radioButton>
+                <p-radioButton pInputText name="vigente" [value]=false label="No Vigente" formControlName="vigente"></p-radioButton>
+            </div>
+        </div>
+    
+    <div class=" flex justify-content-end">
+        <button pButton label="Guardar" type="submit" ></button>
+        <span class="ml-3"></span>
+        <button pButton (click)="displayMaximizable=false" label="Cancelar" ></button>
+    </div>
+</form>
+</p-dialog>

@@ -1,0 +1,24 @@
+<p-menubar [model]="items">
+    <ng-template pTemplate="start">
+        <div class="flex justify-content-center align-items-center">
+            <p-avatar [image]="usuario.colegioLogo" Class="mr-2 p-ml-2 " size="large" shape="">
+            </p-avatar>
+            <b class="mr-6">{{usuario.colegioNombre}}</b>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="end">
+        <div *ngIf="usuario.autenticado" class="flex justify-content-center align-items-center">
+            <button pButton pRipple type="button" icon="pi pi-user"
+                class="p-button-rounded p-button-secondary mr-2"></button>
+            <b class="mr-2">Hola!!!</b> <span class="mr-4"> {{usuario.usuarioNombre}}</span>
+            <button pButton label="Salir" class="p-button-raised p-button-secondary" icon="pi pi-power-off"
+                (click)="logout()"></button>
+        </div>
+        <div *ngIf="!usuario.autenticado" class="flex justify-content-center align-items-center">
+            <button pButton pRipple label="Registrarse" class="p-button-outlined mr-2 p-button-secondary"
+                routerLink='/seguridad/register'></button>
+            <button pButton pRipple label="Iniciar Sesión" class="p-button-raised" icon="pi pi-sign-in"
+                routerLink='/seguridad/login'></button>
+        </div>
+    </ng-template>
+</p-menubar>

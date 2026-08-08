@@ -1,0 +1,73 @@
+<form autocomplete="off" [formGroup]="formulario" (ngSubmit)=" guardarDatosDeEncargadoDeRetiro()">
+    <!-- formulario principal -->
+    <div class="card shadow-1 mt-0 p-1">
+        <h2 class="flex justify-content-center">ENCARGADO DE RETIRO</h2>
+
+        <fieldset pInputText>
+            <legend pInputText class="font-bold ">INFORMACIÓN PERSONAL</legend>
+            <div class="grid">
+
+                <div class="col-12">
+                    <div class="formgrid grid">
+                        <div class="field col">
+                            <label for="rut" class="">RUT</label>
+                            <input id="rut" type="text" pInputText class="w-full" formControlName="rut" />
+                        </div>
+                        <div class="field col">
+                            <label for="nombre" class="">NOMBRE COMPLETO</label>
+                            <input id="nombre" type="text" pInputText class="w-full" formControlName="nombreCompleto" />
+                        </div>
+                      
+                      
+                    </div>
+                    <div class="formgrid grid">
+                        <div class="field col">
+                            <label for="direccion" class="">DIRECCIÓN</label>
+                            <input id="direccion" type="text" pInputText class="w-full" formControlName="direccion" />
+                        </div>
+                        <div class="field col">
+                            <label for="telefono" class="">TELÉFONO</label>
+                            <input id="telefono" type="text" pInputText class="w-full" formControlName="telefono" />
+                        </div>
+                        <div class="field col">
+                            <label for="celular" class="">CELULAR</label>
+                            <input id="celular" type="text" pInputText class="w-full" formControlName="celular" />
+                        </div>
+                        <div class="field col">
+                            <label for="email" class="">CORREO ELECTRÓNICO</label>
+                            <input id="email" type="text" pInputText class="w-full" formControlName="email" />
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+      
+    </div>
+    <!--  pie de formulario -->
+    <div class="card shadow-2">
+        <div class="col-12">
+            <div *ngIf="cargando" class="flex justify-content-center align-items-center">
+                <p-progressSpinner [style]="{width: '50px', height: '50px'}" styleClass="custom-spinner" strokeWidth="8"
+                    fill="#EEEEEE" animationDuration=".5s"></p-progressSpinner>
+                <span [ngStyle]="{color: 'var(--bluegray-500)'}">Registrando Informacion, espere!...</span>
+            </div>
+        </div>
+
+        <div class="card grid">
+            <div class="col">
+                <button pButton routerLink='/fichadematricula/apoderados' label="Anterior" icon="pi pi-angle-double-left"
+                    iconPos="left" class="p-button-primary w-6 mb-2 ml-2" [disabled]="cargando"></button>
+            </div>
+        
+
+            <div class="col flex justify-content-end">
+
+                <button pButton label="Guardar y Siguiente" icon="pi pi-angle-double-right" iconPos="right"
+                    class="p-button-primary w-6 mb-2 mr-2 "></button>
+
+            </div>
+        </div>
+    </div>
+
+</form>

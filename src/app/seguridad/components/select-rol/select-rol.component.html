@@ -1,0 +1,11 @@
+<form [formGroup]="form">
+    <p-autoComplete formControlName="rol" [suggestions]="rolesFiltrados" (completeMethod)="filtrarRol($event)"
+        field="name" [dropdown]="true" styleClass="w-full" placeholder="Seleccione un Rol">
+        <ng-template let-rol pTemplate="item">
+            <div class="rol-item">
+                <div>{{rol.name}}</div>
+            </div>
+        </ng-template>
+    </p-autoComplete>
+</form>
+<span d-error-msg mensaje="Debe seleccionar un Rol" *ngIf="campoNoEsValido('rol')"></span>
